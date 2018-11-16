@@ -158,7 +158,7 @@ def variational_MoG(data, num_iter, num_cluster):
 
     for iter in range(num_iter):
         print("iter " + str(iter))
-        if iter % 15 == 0:
+        if iter % 5 == 0:
             plot()
         resps = variational_E()
         variational_M(resps)
