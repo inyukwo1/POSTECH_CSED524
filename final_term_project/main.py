@@ -9,7 +9,7 @@ import csv
 
 from sklearn import mixture
 
-color_iter = itertools.cycle(['black'])
+color_iter = itertools.cycle(['red'])
 
 
 def plot_results(X, Y_, means, covariances, title):
@@ -24,18 +24,18 @@ def plot_results(X, Y_, means, covariances, title):
         # components.
         if not np.any(Y_ == i):
             continue
-        plt.scatter(X[Y_ == i, 0], X[Y_ == i, 1], .8, color=color)
+        plt.scatter(X[Y_ == i, 0], X[Y_ == i, 1], .8, color="black")
 
         # Plot an ellipse to show the Gaussian component
         angle = np.arctan(u[1] / u[0])
         angle = 180. * angle / np.pi  # convert to degrees
-        ell = mpl.patches.Ellipse(mean, v[0], v[1], 180. + angle, color=color)
+        ell = mpl.patches.Ellipse(mean, v[0] * 2, v[1] * 2, 180. + angle, color=color)
         ell.set_clip_box(splot.bbox)
-        ell.set_alpha(0.5)
+        ell.set_alpha(0.3)
         splot.add_artist(ell)
 
-    plt.xlim(0., 5.)
-    plt.ylim(25., 100.)
+    plt.xlim(0., 7.)
+    plt.ylim(20., 100.)
     plt.title(title)
 
 
@@ -49,7 +49,7 @@ data = np.array(data, dtype=float)
 
 # Fit a Dirichlet process Gaussian mixture using five components
 dpgmm = mixture.BayesianGaussianMixture(n_components=100,
-                                        covariance_type='full', random_state=1, max_iter=20).fit(data)
+                                        covariance_type='full', random_state=12).fit(data)
 plot_results(data, dpgmm.predict(data), dpgmm.means_, dpgmm.covariances_, '')
 
 plt.show()
